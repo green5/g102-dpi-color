@@ -33,6 +33,7 @@ BOOL SetNotificationIcon(unsigned index) {
 
 BOOL DeleteNotificationIcon() {
   NOTIFYICONDATA nid = { sizeof(nid) };
+  nid.hWnd = hwnd;
   return Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
@@ -136,8 +137,8 @@ DWORD IsProcessRunning(const char* processName)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nCmdShow) {
   std::pline_ = [](const string& a, string& line) {
     OutputDebugString(line.c_str());
-    if (a == "ERR" || a == "EXIT") MessageBox(hwnd, line.c_str(), a.c_str(), MB_OK | MB_SYSTEMMODAL);
-    if (a == "EXIT") exit(0);
+    if (a == "ERR") MessageBox(hwnd, line.c_str(), a.c_str(), MB_OK | MB_SYSTEMMODAL);
+    if (a == "EXIT") DeleteNotificationIcon(), MessageBox(hwnd, line.c_str(), a.c_str(), MB_OK | MB_SYSTEMMODAL), exit(0);
   };
   if (IsProcessRunning("g102-dpi-color.exe")) return perr("g102-dpi-color.exe is running");
   if (!hidinit()) return perr("G102 mouse not found");
