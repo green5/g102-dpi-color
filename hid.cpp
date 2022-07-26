@@ -62,6 +62,9 @@ static void read_thread() {
   while(!done) {
     memset(t,0,sizeof(t));
     int n = hid_read(dev,t,sizeof(t)); 
+    if (n == -1) {
+      pexit("hid_read error"); // ?mouse disconnected
+    }
     int dpi = -1;
     if(n==20 && t[0]==0x11 && t[1]==0xff && t[2]==0x0f && t[3]==0x10) dpi = t[4];
     //plog("%ld: [%d] %s dpi %d",++iread,n,dump1(t,n).c_str(),dpi);

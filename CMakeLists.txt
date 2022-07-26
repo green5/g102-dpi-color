@@ -1,0 +1,5 @@
+project(g102-dpi-color CXX)
+add_executable(${PROJECT_NAME} WIN32 main.cpp main.rc)
+set(CMAKE_BUILD_TYPE_INIT Release)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin)
+set(CMAKE_SUPPRESS_REGENERATION true)
